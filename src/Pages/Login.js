@@ -22,25 +22,26 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
-  const loginUser = async()=>{
+  const loginUser = async(e)=>{
+    e.preventDefault()
+    console.log(email,password)
     try {
-      const response = await axios.post('http://localhost:8000/login',{
+      const response = await axios.post('http://localhost:8000/user/login',{
         email, password
       })
       console.log(response)
-      if(response.status ===200){
-        console.log('logged')
-        window.location.assign('/')
+      if(response.status ===401){
+        setError( <Badge textAlign='center'>Email cannot be found</Badge>) 
       }
       if(response.status ===204){
         setError( <Badge textAlign='center'>Fields Cannot be empty</Badge>) 
-
       }
       else{
-        setError( <Badge textAlign='center'>Incorrect Password</Badge>) 
+        console.log('logged')
+        window.location.assign('/')
       }
     } catch (error) {
-      setError( <Badge textAlign='center'>Fields cannot be empty</Badge>) 
+      console.log(error);
     }
     
   }

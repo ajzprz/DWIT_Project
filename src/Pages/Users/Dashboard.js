@@ -16,7 +16,6 @@ import {
 } from "@chakra-ui/react";
 
 import React from "react";
-import NewsFeed from "../components/Feed/NewsFeed";
 
 const Dashboard = () => {
   return (

@@ -32,9 +32,10 @@ const Signup = () => {
   const registerUser = async() =>{
     console.log( firstName, lastName, email, password)
     try {
-      let response = await axios.post('http://localhost:8000/register',{
+      let response = await axios.post('http://localhost:8000/user/register',{
       firstName, lastName, email, password
     })
+
     // console.log(response)
     if (response.status === 200) {
       setError( <Badge textAlign='center'>User Created Successfully</Badge>) 
@@ -45,6 +46,7 @@ const Signup = () => {
       setError( <Badge textAlign='center'>Field cannot be empty</Badge>) 
       console.log('Input field empty')
     }
+   
     } catch (error) {
       console.log(error.response)
     }

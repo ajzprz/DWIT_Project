@@ -6,12 +6,11 @@ import {
   Text,
   Wrap,
   WrapItem,
-  VStack,
   HStack,
   Center,
   Skeleton,
 } from "@chakra-ui/react";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouteLink } from "react-router-dom";
@@ -28,7 +27,7 @@ const NewsFeed = () => {
   }, []);
 
   return (
-    <Wrap m={[0, "5 !important"]} spacing={15} className="newsfeed">
+    <Wrap px={16} spacing={15} className="newsfeed" >
       {isLoading && !error && <Skeleton height="220px" />}
       {error && <p>{error}</p>}
 
@@ -69,12 +68,12 @@ const NewsFeed = () => {
                         src={post.image}
                         alt={post.image}
                         transition="0.5s linear"
-                        _hover={{ transform: "scale(1.7)" }}
+                        _hover={{ transform: "scale(1.2)" }}
                       />
                     )}
                   </Box>
-                  <Box w="50%">
-                    <Box display="flex" alignItems="baseline">
+                  <Box w="50%" display="flex" flexDirection='column' alignItems="baseline">
+                    <Box >
                       <Box
                         color="gray.500"
                         fontWeight="semibold"
@@ -115,6 +114,9 @@ const NewsFeed = () => {
                         {post.reviews} reviews
                       </Box>
                     </Box>
+                    <Box py={4}>
+                        <Text> Author: 'Author Name'</Text>
+                      </Box>
                   </Box>
                 </HStack>
               </WrapItem>
