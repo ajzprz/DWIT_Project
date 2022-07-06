@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "62b87a2025be515d747185ca"
+  },
+  "title": "Bhaktapur Diaries",
+  "location": "Bhaktapur",
+  "experiences": "Exiquite",
+  "image": "https://images.unsplash.com/photo-1618851142562-ff30d09313a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Ymhha3RhcHVyfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+  "rating": "4",
+  "cost": "2000",
+  "heritages": "Bhaktapur Durbar Square, Datatrye, Nyatapole"
+},{
+  "_id": {
+    "$oid": "62b8898625be515d747185cb"
+  },
+  "title": "Kathmandu Diaries",
+  "location": "Kathmandu",
+  "experiences": "Exiquite",
+  "image": "https://static.india.com/wp-content/uploads/2018/08/Kathmandu-photo-1.jpg?impolicy=Medium_Resize&w=1200&h=800",
+  "rating": "4",
+  "cost": "4000",
+  "heritages": "Basanta Durbar Square"
+},{
+  "_id": {
+    "$oid": "62bb0582effa14ace891a558"
+  },
+  "title": "Lalitpur Diaries",
+  "location": "Lalitpur",
+  "experiences": "Exiquite",
+  "image": "https://cdn.britannica.com/36/154236-050-8127D19C/Durbar-Square-Lalitpur-Nepal.jpg",
+  "rating": "4",
+  "cost": "3000",
+  "heritages": "Patan Durbar Square, Krishna Mandir"
+},{
+  "_id": {
+    "$oid": "62bb066ceffa14ace891a559"
+  },
+  "title": "Pokhara Diaries",
+  "location": "Pokhara",
+  "experiences": "Exiquite",
+  "image": "https://www.friendsadventure.com/images/tours-in-nepal/pokhara-tours.jpg",
+  "rating": "4",
+  "cost": "3000",
+  "heritages": "'Bhairav Mandir','Mahendra Cave'"
+}]
