@@ -50,7 +50,7 @@ const SinglePost = () => {
             fontWeight={300}
             fontSize={"2xl"}
           >
-            ${singlePost.cost}
+            Author : ${singlePost.cost}
           </Text>
         </Box>
 

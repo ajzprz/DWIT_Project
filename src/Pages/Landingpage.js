@@ -7,11 +7,7 @@ import {
   Box,
   Text,
   Link,
-  Container,
-  Wrap,
   Center,
-  AspectRatio,
-
   // Spacer,
   // Image,
 } from "@chakra-ui/react";
@@ -77,8 +73,8 @@ const Landingpage = () => {
         </Link>
       </HStack>
 
-      <Center>
-        <Text fontSize="xl" colorScheme={"blackAlpha"}>
+      <Center py={4}>
+        <Text fontSize="xl" fontWeight={"extrabold"} colorScheme={"blackAlpha"}>
           {" "}
           Our Stories{" "}
         </Text>
