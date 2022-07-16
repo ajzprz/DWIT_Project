@@ -12,6 +12,8 @@ import {
   // Image,
 } from "@chakra-ui/react";
 import NewsFeed from "../components/Feed/NewsFeed";
+import {Link as RouteLink} from 'react-router-dom'
+
 
 const Landingpage = () => {
   return (
@@ -80,6 +82,8 @@ const Landingpage = () => {
         </Text>
       </Center>
       <NewsFeed />
+
+      <Link as = {RouteLink} to = '/posts/addPost' > New Post </Link>
     </Stack>
   );
 };

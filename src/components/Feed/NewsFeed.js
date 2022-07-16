@@ -21,13 +21,15 @@ import { getPostsData } from "../../store/slices/postSlice";
 const NewsFeed = () => {
   const { posts, isLoading, error } = useSelector((state) => state.post);
   const dispatch = useDispatch();
+  console.log(posts)
 
   useEffect(() => {
     dispatch(getPostsData());
+
   }, []);
 
   return (
-    <Wrap px={16} spacing={15} className="newsfeed" >
+    <Wrap px={18} spacing={15} className="newsfeed" >
       {isLoading && !error && <Skeleton height="220px" />}
       {error && <p>{error}</p>}
 
@@ -40,6 +42,7 @@ const NewsFeed = () => {
               <WrapItem
                 className="post"
                 position="relative"
+                p={2}
                 key={index}
                 w={600}
                 borderWidth="1px"
@@ -61,12 +64,17 @@ const NewsFeed = () => {
                 </Badge>
                 <HStack alignItems="start">
                   <Box overflow={"hidden"} h={200} w="50%">
-                    {post.image === "null" ? (
-                      <Center>NO image found</Center>
+                    {!post.image   ? (
+                      <Image
+                        w='500px'
+                        h='190px'
+                        src='https://bitsofco.de/content/images/2018/12/broken-1.png'
+                        alt ='location image'
+                      />
                     ) : (
                       <Image
                         src={post.image}
-                        alt={post.image}
+                        alt='Location image'
                         transition="0.5s linear"
                         _hover={{ transform: "scale(1.2)" }}
                       />
@@ -107,7 +115,7 @@ const NewsFeed = () => {
                         .map((_, i) => (
                           <FaStar
                             key={i}
-                            color={i < post.rating ? "blue.500" : "gray.300"}
+                            color={i < post.rating ? "white.500" : "blue.300"}
                           />
                         ))}
                       <Box as="span" ml="2" color="gray.600" fontSize="sm">
