@@ -13,6 +13,7 @@ import {
   List,
   ListItem,
   AspectRatio,
+  HStack,
 } from "@chakra-ui/react";
 import { MdTravelExplore } from "react-icons/md";
 import { useParams } from "react-router-dom";
@@ -45,13 +46,22 @@ const SinglePost = () => {
           >
             {singlePost.title}
           </Heading>
+          <HStack justifyContent='space-between'>
           <Text
             color={useColorModeValue("gray.900", "gray.400")}
             fontWeight={300}
-            fontSize={"2xl"}
+            fontSize={"1xl"}
           >
-            Author : ${singlePost.cost}
+            Author : Author
+            </Text>
+            <Text
+            color={useColorModeValue("gray.900", "gray.400")}
+            fontWeight={300}
+            fontSize={"1xl"}
+          >
+            Estimated Cost : ${singlePost.cost}
           </Text>
+          </HStack>
         </Box>
         {!singlePost.image ?  
         <Image

@@ -54,8 +54,8 @@ const NewsFeed = () => {
               >
                 <Badge
                   position="absolute"
-                  left={2}
-                  top={2}
+                  left={5}
+                  top={5}
                   borderRadius="full"
                   px="2"
                   colorScheme="teal"
