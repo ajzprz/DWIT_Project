@@ -86,7 +86,12 @@ const SinglePostPage = () => {
         </Box>
       </Square>
       {/* <Text>Hello</Text> */}
+
+
+
       <SinglePost />
+
+
       <Square
         mt={100}
         display="flex"

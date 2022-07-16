@@ -29,11 +29,11 @@ const SinglePost = () => {
   useEffect(() => {
     dispatch(getSinglePostData(`${postId}`));
   }, []);
-  console.log(`${postId}`);
-  console.log(singlePost);
+  // console.log(`${postId}`);
+  // console.log(singlePost);
 
   return (
-    <SimpleGrid columns={{ base: 1, md: 1, lg: 1 }}>
+    <SimpleGrid columns={{ base: 1, md: 1, lg: 1 }} w='60vw' bgColor='whiteAlpha.600' p={4} borderRadius='lg'>
       {isLoading && !error && <p>Data is loading</p>}
 
       <Stack spacing={{ base: 6, md: 10 }}>
@@ -53,7 +53,16 @@ const SinglePost = () => {
             Author : ${singlePost.cost}
           </Text>
         </Box>
-
+        {!singlePost.image ?  
+        <Image
+        rounded={"md"}
+        alt={"product image"}
+        src='https://bitsofco.de/content/images/2018/12/broken-1.png'
+        fit={"cover"}
+        align={"center"}
+        w={"100%"}
+        h={{ base: "100%", sm: "400px", lg: "500px" }}
+      /> :
         <Image
           rounded={"md"}
           alt={"product image"}
@@ -63,6 +72,7 @@ const SinglePost = () => {
           w={"100%"}
           h={{ base: "100%", sm: "400px", lg: "500px" }}
         />
+        }
 
         <Stack
           spacing={{ base: 4, sm: 6 }}
@@ -82,7 +92,13 @@ const SinglePost = () => {
               {singlePost.title}
             </Text>
             <Text textAlign={"justify"} id="#para_one" fontSize={"lg"}>
-              {singlePost.paragraphs}
+              {singlePost.firstParagraph}
+            </Text>
+            <Text textAlign={"justify"} id="#para_one" fontSize={"lg"}>
+              {singlePost.secondParagraph}
+            </Text>
+            <Text textAlign={"justify"} id="#para_one" fontSize={"lg"}>
+              {singlePost.thirdParagraph}
             </Text>
           </VStack>
           <Box>
@@ -204,9 +220,9 @@ const SinglePost = () => {
             src={singlePost.map}
             width="600"
             height="450"
-            allowfullscreen=""
+            allowFullScreen=""
             loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
+            referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
         </AspectRatio>
       </Stack>

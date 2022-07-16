@@ -7,7 +7,7 @@ const initialState = {
   error:null,
 };
 
-const url = "http://localhost:8000/posts"
+const url = "http://localhost:8000/posts/post"
 
 export const getPostsData = createAsyncThunk("posts/getPostData", async () => {
   try{

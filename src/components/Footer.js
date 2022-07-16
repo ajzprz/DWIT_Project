@@ -13,8 +13,8 @@ import {
 
 const Footer = () => {
   return (
-    <Box mt={10}
-      bg={useColorModeValue("gray.50", "gray.900")}
+    <Box 
+      bgGradient="linear(to-r, #013b7e, blue.600, #1758a2) "
       color={useColorModeValue("gray.700", "gray.200")}
     >
       <Container as={Stack} maxW={"6xl"} py={10}>
@@ -24,19 +24,19 @@ const Footer = () => {
         >
           <Stack spacing={6}>
             <Box>
-              <Image
+              <Image m={'auto'}
                 h={100}
                 w={100}
                 src="https://thetravelhub.com/img/tth-logo-small.png"
                 alt="Logo"
               />
             </Box>
-            <Text fontSize={"sm"}>
-              © 2022 Chakra Templates. All rights reserved
+            <Text textAlign='center' fontSize={"sm"}>
+              © 2022 THE TRAVEL HUB. All rights reserved
             </Text>
           </Stack>
           <Stack align={"flex-start"}>
-            <Text>Product</Text>
+            <Text fontSize={"2xl"} fontWeight={"bold"}>Products</Text>
             <Link href={"#"}>Overview</Link>
             <Link href={"#"}>Features</Link>
             <Link href={"#"}>Tutorials</Link>
@@ -44,7 +44,7 @@ const Footer = () => {
             <Link href={"#"}>Releases</Link>
           </Stack>
           <Stack align={"flex-start"}>
-            <Text>Company</Text>
+            <Text fontSize={"2xl"} fontWeight={"bold"}>Company</Text>
             <Link href={"#"}>About</Link>
             <Link href={"#"}>Press</Link>
             <Link href={"#"}>Careers</Link>
@@ -52,7 +52,7 @@ const Footer = () => {
             <Link href={"#"}>Partners</Link>
           </Stack>
           <Stack align={"flex-start"}>
-            <Text>Support</Text>
+            <Text fontSize={"2xl"} fontWeight={"bold"}>Support</Text>
             <Link href={"#"}>Help Center</Link>
             <Link href={"#"}>Terms of Service</Link>
             <Link href={"#"}>Legal</Link>
@@ -60,7 +60,7 @@ const Footer = () => {
             <Link href={"#"}>Status</Link>
           </Stack>
           <Stack align={"flex-start"}>
-            <Text>Follow Us</Text>
+            <Text fontSize={"2xl"} fontWeight={"bold"}>Follow Us</Text>
             <Link href={"#"}>Facebook</Link>
             <Link href={"#"}>Twitter</Link>
             <Link href={"#"}>Dribbble</Link>
