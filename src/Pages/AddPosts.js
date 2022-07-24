@@ -5,6 +5,7 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  HStack,
   Input,
   Slider,
   SliderFilledTrack,
@@ -29,6 +30,8 @@ const AddPosts = () => {
   const [suggestion, setSuggestion] = useState("");
   const [cost, setCost] = useState(0);
   const [rating, setRating] = useState(5);
+  const [latitude, setLatitude] = useState('27.6936951');
+  const [longitude, setLongitude] = useState('85.0969408');
 
   const [showTooltip] = useState(false);
 
@@ -37,6 +40,8 @@ const AddPosts = () => {
     console.log(
       title,
       location,
+      latitude,
+      longitude,
       heritages,
       firstParagraph,
       secondParagraph,
@@ -67,9 +72,9 @@ const AddPosts = () => {
   };
 
   return (
-    <Flex justifyContent='space-around'>
-      <VStack p={10} >
-        <Heading as="h2" textAlign="start" textTransform='uppercase'>
+    <Flex justifyContent="space-around">
+      <VStack p={10}>
+        <Heading as="h2" textAlign="start" textTransform="uppercase">
           Share your experience
         </Heading>
         <Divider />
@@ -98,6 +103,22 @@ const AddPosts = () => {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
+
+            <HStack>
+            <FormLabel>Latitude</FormLabel>
+              <Input
+                type="number"
+                value={latitude}
+                onChange={(e) => setLatitude(e.target.value)}
+              />
+
+              <FormLabel>Longitude</FormLabel>
+              <Input
+                type="number"
+                value={longitude}
+                onChange={(e) => setLongitude(e.target.value)}
+              />
+              </HStack>
             <FormLabel>Images of Location</FormLabel>
             <Input
               border="dotted"
@@ -197,7 +218,18 @@ const AddPosts = () => {
               value={suggestion}
               onChange={(e) => setSuggestion(e.target.value)}
             />
+          </VStack>
+          <VStack spacing={4}
+            alignItems="start"
+            bgColor="white"
+            p="20px"
+            borderRadius={"lg"}>
+            <Heading as="h5" size="sm" textTransform="uppercase">
+              {" "}
+              Primary Details{" "}
+            </Heading>
             <Divider />
+
             <Button type="submit" onClick={postPost}>
               Submit
             </Button>

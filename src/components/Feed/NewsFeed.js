@@ -7,8 +7,10 @@ import {
   Wrap,
   WrapItem,
   HStack,
-  Center,
   Skeleton,
+  SkeletonCircle,
+  SkeletonText,
+  Button,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
@@ -16,23 +18,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link as RouteLink } from "react-router-dom";
 // import { NameContext } from "../..";
 import { getPostsData } from "../../store/slices/postSlice";
+import { getLoginData } from "../../store/slices/signInSlice";
 // import useFetch from "../../hooks/hooks";
 
 const NewsFeed = () => {
   const { posts, isLoading, error } = useSelector((state) => state.post);
+  const { users, isAuthenticated } = useSelector((state) => state.signIn);
   const dispatch = useDispatch();
-  console.log(posts)
+  console.log(posts, isLoading, error, isAuthenticated,users);
 
   useEffect(() => {
-    dispatch(getPostsData());
-
+    dispatch(getPostsData())
+    dispatch(getLoginData());
   }, []);
 
   return (
-    <Wrap px={18} spacing={15} className="newsfeed" >
-      {isLoading && !error && <Skeleton height="220px" />}
-      {error && <p>{error}</p>}
-
+    <Wrap px={18} spacing={15} className="newsfeed">
+      {isLoading && !error && (
+        <Box padding="6" w="40%" boxShadow="lg" bg="white">
+          <SkeletonCircle size="10" />
+          <SkeletonText mt="4" noOfLines={4} spacing="4" />
+        </Box>
+      )}
       {!isLoading &&
         !error &&
         posts &&
@@ -41,7 +48,6 @@ const NewsFeed = () => {
             <Link key={index} as={RouteLink} to={`posts/${post._id}`}>
               <WrapItem
                 className="post"
-                position="relative"
                 p={2}
                 key={index}
                 w={600}
@@ -52,36 +58,60 @@ const NewsFeed = () => {
                   background: "teal.200",
                 }}
               >
-                <Badge
-                  position="absolute"
-                  left={5}
-                  top={5}
-                  borderRadius="full"
-                  px="2"
-                  colorScheme="teal"
-                >
-                  New
-                </Badge>
+               
                 <HStack alignItems="start">
-                  <Box overflow={"hidden"} h={200} w="50%">
-                    {!post.image   ? (
+                  <Box overflow='hidden' h={200} w="50%" position="relative">
+                    {!post.image ? (
                       <Image
-                        w='500px'
-                        h='190px'
-                        src='https://bitsofco.de/content/images/2018/12/broken-1.png'
-                        alt ='location image'
+                        w="500px"
+                        h='100%'
+                        src="https://bitsofco.de/content/images/2018/12/broken-1.png"
+                        alt="location image"
+                        loading="lazy"
+                        overflow='hidden'
                       />
                     ) : (
                       <Image
                         src={post.image}
-                        alt='Location image'
+                        alt="Location image"
                         transition="0.5s linear"
+                        loading="lazy"
+                        overflow='hidden'
                         _hover={{ transform: "scale(1.2)" }}
                       />
                     )}
+
+                    {isAuthenticated &&  
+                    <HStack
+                      w="100%"
+                      justifyContent="space-between"
+                      // bgColor={"blackAlpha.700"}
+                      position={"absolute"}
+                      bottom={4}
+                      left={0}
+                    >
+                      <Button>Edit</Button>
+                      <Button>Delete</Button>
+                    </HStack>
+                    }
+                    <Badge
+                  position="absolute"
+                  left={2}
+                  top={2}
+                  borderRadius="full"
+                  px="2"
+                  colorScheme="teal"
+                  >
+                  New
+                </Badge>
                   </Box>
-                  <Box w="50%" display="flex" flexDirection='column' alignItems="baseline">
-                    <Box >
+                  <Box
+                    w="50%"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="baseline"
+                  >
+                    <Box>
                       <Box
                         color="gray.500"
                         fontWeight="semibold"
@@ -123,8 +153,8 @@ const NewsFeed = () => {
                       </Box>
                     </Box>
                     <Box py={4}>
-                        <Text> Author: 'Author Name'</Text>
-                      </Box>
+                      <Text> Author: 'Author Name'</Text>
+                    </Box>
                   </Box>
                 </HStack>
               </WrapItem>

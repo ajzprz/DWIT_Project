@@ -9,11 +9,22 @@ import {
   Box,
   Spacer,
   Divider,
+  Button,
 } from "@chakra-ui/react";
-import Login from "../Pages/Login";
-import Signup from "../Pages/Signup";
+import {useCookies} from 'react-cookie';
+import axios from "axios";
+
 
 const Navbar = () => {
+  const [cookies, setCookie,removeCookie] = useCookies('');
+
+  const logOut = async() =>{
+    let response = await axios.post('http://localhost:8000/user/logout')
+    if(response){
+      window.location.assign('/login')
+      removeCookie('Id',{path:'/'})
+    }
+  }
   return (
     <HStack p={4} zIndex={100} w="100%" as ="header" position="fixed" backgroundColor="rgba(255, 
       255, 255, 0.90)" justifyContent='flex-end'  className="Navbar" boxShadow="md">
@@ -34,6 +45,9 @@ const Navbar = () => {
           </Link>
           <Link color='teal.700' fontWeight='bold' mr={10} as= {RouteLink} to="/login" >
             Login
+          </Link>
+          <Link onClick={logOut} color='teal.700' fontWeight='bold' mr={10} as= {RouteLink} to="/login" >
+            Log out
           </Link>
         </Box>
       </HStack>

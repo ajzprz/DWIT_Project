@@ -34,7 +34,7 @@ const SinglePost = () => {
   // console.log(singlePost);
 
   return (
-    <SimpleGrid columns={{ base: 1, md: 1, lg: 1 }} w='60vw' bgColor='whiteAlpha.600' p={4} borderRadius='lg'>
+    <SimpleGrid columns={{ base: 1, md: 1, lg: 1 }} p ={4} w='60vw' bgColor='whiteAlpha.600' borderRadius='lg'>
       {isLoading && !error && <p>Data is loading</p>}
 
       <Stack spacing={{ base: 6, md: 10 }}>
@@ -70,7 +70,7 @@ const SinglePost = () => {
         src='https://bitsofco.de/content/images/2018/12/broken-1.png'
         fit={"cover"}
         align={"center"}
-        w={"100%"}
+        w='-webkit-fill-available'
         h={{ base: "100%", sm: "400px", lg: "500px" }}
       /> :
         <Image
@@ -227,7 +227,8 @@ const SinglePost = () => {
         <AspectRatio>
           <iframe
             title="map"
-            src={singlePost.map}
+            src ={singlePost.map}
+
             width="600"
             height="450"
             allowFullScreen=""
