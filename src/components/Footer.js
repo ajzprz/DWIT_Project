@@ -16,6 +16,8 @@ const Footer = () => {
     <Box 
       bgGradient="linear(to-r, #013b7e, blue.600, #1758a2) "
       color={useColorModeValue("gray.700", "gray.200")}
+      position='relative'
+      zIndex='10'
     >
       <Container as={Stack} maxW={"6xl"} py={10}>
         <SimpleGrid

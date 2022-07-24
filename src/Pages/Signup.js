@@ -19,37 +19,52 @@ import {
 import {Link as RouteLink} from 'react-router-dom'
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { getSignUpData } from "../store/slices/registerSlice";
+
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Signup = () => {
+
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error,setError] = useState('')
+  const [message,setMessage] = useState('')
+
+  const {users, isAuthenticated, loading, error , status} = useSelector(
+    (state) => state.signUp
+  )
 
   const registerUser = async() =>{
-    console.log( firstName, lastName, email, password)
-    try {
-      let response = await axios.post('http://localhost:8000/user/register',{
-      firstName, lastName, email, password
-    })
 
-    // console.log(response)
-    if (response.status === 200) {
-      setError( <Badge textAlign='center'>User Created Successfully</Badge>) 
-      console.log('user created')
+    dispatch(getSignUpData({firstName, lastName, email, password}))
+    console.log(firstName, lastName, email, password , users, status)
+      // window.location.assign('/')
+
+  //   console.log( firstName, lastName, email, password)
+  //   try {
+  //     let response = await axios.post('http://localhost:8000/user/register',{
+  //     firstName, lastName, email, password
+  //   })
+
+  //   // console.log(response)
+    if (status === 200) {
+      setMessage( <Badge textAlign='center'>User Created Successfully</Badge>) 
+  //     console.log('user created')
       window.location.assign('/')
     }
-    if (response.status === 204) {
-      setError( <Badge textAlign='center'>Field cannot be empty</Badge>) 
+    if (status === 204) {
+      setMessage( <Badge textAlign='center'>Field cannot be empty</Badge>) 
       console.log('Input field empty')
     }
    
-    } catch (error) {
-      console.log(error.response)
-    }
+  //   } catch (error) {
+  //     console.log(error.response)
+  //   }
   }
 
   return (
@@ -120,7 +135,7 @@ const Signup = () => {
                 }}>
                 Sign up
               </Button>
-              <Text textAlign={'center'}>{error}</Text>
+              <Text textAlign={'center'}>{message}</Text>
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>

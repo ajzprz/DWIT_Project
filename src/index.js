@@ -6,9 +6,11 @@ import App from './App';
 import { ChakraProvider } from '@chakra-ui/react'
 import { Provider } from "react-redux";
 import { store } from "./store";
+// import makeStore from './redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 export const NameContext = createContext()
+// const store = makeStore()
 
 root.render(
   <React.StrictMode>

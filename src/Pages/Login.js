@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useCookies} from 'react-cookie';
 import {
   Flex,
   Box,
@@ -15,50 +16,58 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import { Link as RouteLink } from "react-router-dom";
-import axios from "axios";
-
+// import axios from "axios";
+import { getLoginData } from "../store/slices/signInSlice";
+import { useDispatch, useSelector } from "react-redux";
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [cookies, setCookie] = useCookies('');
 
-
+  const { users, loading, error, isAuthenticated,token } = useSelector(
+    (state) => state.signIn
+  );
 
   const loginUser = async (e) => {
     e.preventDefault();
-    console.log(email, password);
-    try {
-      const api = `http://localhost:8000`
-      
-      const response = await axios.post(
-        api+`/user/login`,
-        {
-            email, password,
-          headers: {
-            authorization: 'token',
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const token = response.data[0]._id;
-      axios.get(api, { headers: {"Authorization" : `Bearer ${token}`} })
+    console.log(token, users, loading, error, isAuthenticated);
 
-      console.log(response);
-      
-      if (response.status === 401) {
-        setError(<Badge textAlign="center">Email cannot be found</Badge>);
-      }
-      if (response.status === 204) {
-        setError(<Badge textAlign="center">Fields Cannot be empty</Badge>);
-      } else {
-        console.log("logged");
-        setError(<Badge textAlign="center">Login Success</Badge>);
-        window.location.assign("/user/dashboard");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(getLoginData({ email, password }));
+    // setCookie('Id', token,{path:'/'})
+      // localStorage.setItem("id", token)
+          window.location.assign("/");
+
+    //   // console.log(email, password);
+    //   try {
+    //     const api = `http://localhost:8000`
+
+    //     const response = await axios.post(
+    //       api+`/user/login`,
+    //       {
+    //           email, password,
+    //       }
+    //     );
+    //     console.log(response);
+
+    //     if (response.status === 401) {
+    //       setError(<Badge textAlign="center">Email cannot be found</Badge>);
+    //     }
+    //     if (response.status === 204) {
+    //       setError(<Badge textAlign="center">Fields Cannot be empty</Badge>);
+    //     } else {
+    //       console.log("logged");
+    //       setError(<Badge textAlign="center">Login Success</Badge>);
+    //       console.log()
+    //       localStorage.setItem("id", response.data.token)
+
+    //       // window.location.assign("/user/dashboard");
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
   };
 
   return (

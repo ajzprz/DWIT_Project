@@ -3,7 +3,7 @@ import axios from "axios";
 
 const initialState = {
   posts: [],
-  isLoading: false,
+  isLoading: true,
   error:null,
 };
 
@@ -31,7 +31,7 @@ export const postsSlice = createSlice({
           state.isLoading = false;
           },
           [getPostsData.rejected]: (state) => {
-            state.isLoading = false;
+            state.isLoading = true;
             state.error = true;
           }
     }
