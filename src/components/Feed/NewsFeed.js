@@ -25,7 +25,7 @@ const NewsFeed = () => {
   const { posts, isLoading, error } = useSelector((state) => state.post);
   const { users, isAuthenticated } = useSelector((state) => state.signIn);
   const dispatch = useDispatch();
-  console.log(posts, isLoading, error, isAuthenticated,users);
+  console.log(posts, error, isAuthenticated);
 
   useEffect(() => {
     dispatch(getPostsData())
@@ -40,6 +40,12 @@ const NewsFeed = () => {
           <SkeletonText mt="4" noOfLines={4} spacing="4" />
         </Box>
       )}
+      { !isLoading && error &&(
+        <Box padding="6" w="40%" boxShadow="lg" bg="white">
+        <Text>Unable to fetch</Text>
+        </Box>
+      )}
+
       {!isLoading &&
         !error &&
         posts &&

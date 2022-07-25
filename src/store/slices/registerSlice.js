@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  users: [],
+  users: null,
   loading: true,
   error: null,
   status:null,
@@ -19,12 +19,7 @@ export const getSignUpData = createAsyncThunk(
         firstName,
         lastName,
         email,
-        password,
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            "Access-Control-Allow-Origin": "*", 
-        },
-        withCredentials :true,
+        password
       });
       return (response.data);
     //   console.log(response.json())
@@ -34,7 +29,7 @@ export const getSignUpData = createAsyncThunk(
   }
 );
 
-export const loginSlice = createSlice({
+export const signUp = createSlice({
   name: "users",
   initialState,
   extraReducers: {
@@ -45,18 +40,18 @@ export const loginSlice = createSlice({
       state.error = null;
     },
     [getSignUpData.fulfilled]: (state, action) => {
-      state.users = action.payload.user;
-      state.status = action.payload.status;
+      state.users = action.payload;
+      state.status = action.payload;
       state.isAuthenticated = true;
       state.loading = false;
       state.error = false;
     },
     [getSignUpData.rejected]: (state,action) => {
-      state.status = action.paylaod.status;
+      state.status = action.payload;
       state.loading = false;
       state.error = true;
     },
   },
 });
 
-export default loginSlice.reducer;
+export default signUp.reducer;

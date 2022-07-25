@@ -21,7 +21,7 @@ import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { getSignUpData } from "../store/slices/registerSlice";
 
-import axios from 'axios';
+// import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Signup = () => {
@@ -39,11 +39,17 @@ const Signup = () => {
     (state) => state.signUp
   )
 
-  const registerUser = async() =>{
-
+  const registerUser = (e) =>{
+    e.preventDefault();
     dispatch(getSignUpData({firstName, lastName, email, password}))
-    console.log(firstName, lastName, email, password , users, status)
-      // window.location.assign('/')
+    console.log( users)
+    // if(users){
+    //   // window.location.assign('/')
+    // }
+    // if (!users) {
+    //   setMessage( <Badge textAlign='center'>Field cannot be empty</Badge>) 
+    //   console.log('Input field empty')
+    // }
 
   //   console.log( firstName, lastName, email, password)
   //   try {
@@ -51,16 +57,13 @@ const Signup = () => {
   //     firstName, lastName, email, password
   //   })
 
-  //   // console.log(response)
-    if (status === 200) {
-      setMessage( <Badge textAlign='center'>User Created Successfully</Badge>) 
-  //     console.log('user created')
-      window.location.assign('/')
-    }
-    if (status === 204) {
-      setMessage( <Badge textAlign='center'>Field cannot be empty</Badge>) 
-      console.log('Input field empty')
-    }
+  // //   // console.log(response)
+  //   if (response.status === 200) {
+  //     setMessage( <Badge textAlign='center'>User Created Successfully</Badge>) 
+  // //     console.log('user created')
+  //     window.location.assign('/')
+  //   }
+  
    
   //   } catch (error) {
   //     console.log(error.response)
