@@ -31,7 +31,7 @@ export const postsSlice = createSlice({
           state.isLoading = false;
           },
           [getPostsData.rejected]: (state) => {
-            state.isLoading = true;
+            state.isLoading = false;
             state.error = true;
           }
     }

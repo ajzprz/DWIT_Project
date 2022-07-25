@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useCookies} from 'react-cookie';
+import { useCookies } from "react-cookie";
 import {
   Flex,
   Box,
@@ -25,20 +25,26 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [cookies, setCookie] = useCookies('');
+  const [cookies, setCookie] = useCookies("");
 
-  const { users, loading, error, isAuthenticated,token } = useSelector(
+  const { users, loading, error, isAuthenticated, token } = useSelector(
     (state) => state.signIn
   );
 
   const loginUser = async (e) => {
     e.preventDefault();
-    console.log(token, users, loading, error, isAuthenticated);
+    // console.log( users);
 
-    dispatch(getLoginData({ email, password }));
+    const response = await dispatch(getLoginData({ email, password }));
+    // console.log(response);
     // setCookie('Id', token,{path:'/'})
-      // localStorage.setItem("id", token)
-          window.location.assign("/");
+    if (localStorage.getItem('isAuthenticated')
+    ) {
+      // window.location.assign("/");
+    }
+    if (!response.meta.requestStatus === 'fulfilled') {
+      setMessage(<Badge textAlign="center">Fields Cannot be empty</Badge>);
+    }
 
     //   // console.log(email, password);
     //   try {
@@ -118,7 +124,7 @@ const Login = () => {
                   Forgot password?
                 </Link>
               </Stack>
-              <Text textAlign={"center"}>{error}</Text>
+              <Text textAlign={"center"}>{message}</Text>
               <Button
                 onClick={loginUser}
                 bg={"blue.400"}

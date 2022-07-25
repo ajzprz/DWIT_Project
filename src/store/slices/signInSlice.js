@@ -3,8 +3,8 @@ import axios from "axios";
 
 const initialState = {
   users: [],
-  token: null,
   loading: true,
+  token : null,
   error: null,
   isAuthenticated: false,
 };
@@ -41,10 +41,12 @@ export const loginSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
+
     [getLoginData.fulfilled]: (state, action) => {
-        state.token = action.payload.token;
+      console.log('test');
+      localStorage.setItem('isAuthenticated',true)
       state.users = action.payload.user;
-      state.isAuthenticated = true;
+      state.token = action.payload.token;
       state.loading = false;
       state.error = false;
     },
