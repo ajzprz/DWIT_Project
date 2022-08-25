@@ -1,14 +1,10 @@
 import {
   Box,
-  Center,
-  Container,
   Divider,
   Flex,
-  HStack,
   Icon,
   Link,
   Square,
-  Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -163,7 +159,7 @@ const SinglePostPage = () => {
           </Link>
 
           <Link
-            to="#para_three"
+            href="#para_three"
             p={3}
             _hover={{
               background: "grey.400",

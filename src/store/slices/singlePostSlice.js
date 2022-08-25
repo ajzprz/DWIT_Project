@@ -22,7 +22,7 @@ export const singlePostSlice = createSlice({
     name:'singlePost',
     initialState,
     extraReducers:{
-      [getSinglePostData.fulfilled]: (state) => {
+      [getSinglePostData.pending]: (state) => {
         state.isLoading = true;
       },
         [getSinglePostData.fulfilled]: (state, action) => {

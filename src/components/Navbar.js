@@ -1,43 +1,25 @@
-import React, { useEffect } from "react";
-import { Link as RouteLink } from "react-router-dom";
+import React from "react";
+import { Link as RouteLink, useNavigate } from "react-router-dom";
 import {
   HStack,
   Image,
-  VStack,
   Link,
-  Input,
   Box,
-  Spacer,
-  Divider,
-  Button,
-  Text,
 } from "@chakra-ui/react";
-import { useCookies } from "react-cookie";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoginData } from "../store/slices/signInSlice";
-
+import { authActions } from "../store/slices/authSlice";
 
 const Navbar = () => {
-  const {users} = useSelector(
-    (state)=> state.signIn
-  )
-  const [cookies, setCookie, removeCookie] = useCookies("");
-  console.log(users)
-
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getLoginData());
-  }, []);
+  const navigate = useNavigate()
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  const logOut = async () => {
-    let response = await axios.post("http://localhost:8000/user/logout");
-    if (response) {
-      window.location.assign("/home");
-      window.location.reload()
-      localStorage.removeItem("isAuthenticated");
-    }
+  const logOut = (e) => {
+    e.preventDefault();
+    dispatch(authActions.logOut());
+    navigate('/login')
   };
+
   return (
     <HStack
       p={4}
@@ -62,50 +44,42 @@ const Navbar = () => {
           alt="Logo"
         />
       </RouteLink>
-      <Box>
-{/* 
-        {localStorage.getItem("isAuthenticated") === 'true'  ? ( */}
+
+      {!isLoggedIn && (
+        <Box>
           <Link
-            onClick={logOut}
+            mr={4}
+            color="teal.700"
+            fontWeight="bold"
+            as={RouteLink}
+            to="/signup"
+          >
+            Sign Up
+          </Link> 
+          <Link
             color="teal.700"
             fontWeight="bold"
             mr={10}
             as={RouteLink}
             to="/login"
           >
+            Login
+          </Link>
+        </Box>
+      )}
+
+      {isLoggedIn && (
+        <Box>
+          <Link
+            onClick={logOut}
+            color="teal.700"
+            fontWeight="bold"
+            mr={10}
+          >
             Log out
           </Link>
-        {/* ) : ( */}
-            <Link
-              mr={4}
-              color="teal.700"
-              fontWeight="bold"
-              as={RouteLink}
-              to="/signup"
-            >
-              Sign Up
-            </Link>
-            <Link
-              color="teal.700"
-              fontWeight="bold"
-              mr={10}
-              as={RouteLink}
-              to="/login"
-            >
-              Login
-            </Link>
-            <Link
-              color="teal.700"
-              fontWeight="bold"
-              mr={10}
-              as={RouteLink}
-              to="/login"
-            >
-              {users[0].firstName}
-            </Link>
-            
-        {/* )} */}
-      </Box>
+        </Box>
+      )}
     </HStack>
   );
 };

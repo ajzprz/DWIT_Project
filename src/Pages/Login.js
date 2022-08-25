@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useCookies } from "react-cookie";
 import {
   Flex,
   Box,
@@ -13,67 +12,30 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Badge,
 } from "@chakra-ui/react";
-import { Link as RouteLink } from "react-router-dom";
+import { Link as RouteLink, useNavigate } from "react-router-dom";
 // import axios from "axios";
-import { getLoginData } from "../store/slices/signInSlice";
+import { authActions, getLoginData } from "../store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [cookies, setCookie] = useCookies("");
 
-  const { users, loading, error, isAuthenticated, token } = useSelector(
-    (state) => state.signIn
+  const isLoggedIn  = useSelector(
+    state => state.auth.isLoggedIn
   );
 
-  const loginUser = async (e) => {
+  console.log(isLoggedIn, 'authenticated')
+
+  const loginUser = (e) => {
     e.preventDefault();
     // console.log( users);
-
-    const response = await dispatch(getLoginData({ email, password }));
-    // console.log(response);
-    // setCookie('Id', token,{path:'/'})
-    if (localStorage.getItem('isAuthenticated')
-    ) {
-      // window.location.assign("/");
-    }
-    if (!response.meta.requestStatus === 'fulfilled') {
-      setMessage(<Badge textAlign="center">Fields Cannot be empty</Badge>);
-    }
-
-    //   // console.log(email, password);
-    //   try {
-    //     const api = `http://localhost:8000`
-
-    //     const response = await axios.post(
-    //       api+`/user/login`,
-    //       {
-    //           email, password,
-    //       }
-    //     );
-    //     console.log(response);
-
-    //     if (response.status === 401) {
-    //       setError(<Badge textAlign="center">Email cannot be found</Badge>);
-    //     }
-    //     if (response.status === 204) {
-    //       setError(<Badge textAlign="center">Fields Cannot be empty</Badge>);
-    //     } else {
-    //       console.log("logged");
-    //       setError(<Badge textAlign="center">Login Success</Badge>);
-    //       console.log()
-    //       localStorage.setItem("id", response.data.token)
-
-    //       // window.location.assign("/user/dashboard");
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
+    dispatch( authActions.login());
+    navigate("/")
   };
 
   return (
