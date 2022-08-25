@@ -14,19 +14,20 @@ import {
   Text,
   useColorModeValue,
   Link,
-  Badge,
 } from '@chakra-ui/react';
-import {Link as RouteLink} from 'react-router-dom'
+import {Link as RouteLink, useNavigate} from 'react-router-dom'
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { getSignUpData } from "../store/slices/registerSlice";
 
 // import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '../store/slices/authSlice';
 
 const Signup = () => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [firstName, setFirstName] = useState('')
@@ -35,16 +36,18 @@ const Signup = () => {
   const [password, setPassword] = useState('')
   const [message,setMessage] = useState('')
 
-  const {users, isAuthenticated, loading, error , status} = useSelector(
+  const {users} = useSelector(
     (state) => state.signUp
   )
 
   const registerUser = (e) =>{
     e.preventDefault();
     dispatch(getSignUpData({firstName, lastName, email, password}))
+    dispatch(authActions.login())
     console.log( users)
+    navigate('/dashboard')
     // if(users){
-    //   // window.location.assign('/')
+
     // }
     // if (!users) {
     //   setMessage( <Badge textAlign='center'>Field cannot be empty</Badge>) 

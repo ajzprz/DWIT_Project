@@ -218,7 +218,7 @@ const AddPosts = () => {
               value={suggestion}
               onChange={(e) => setSuggestion(e.target.value)}
             />
-          </VStack>
+          {/* </VStack>
           <VStack spacing={4}
             alignItems="start"
             bgColor="white"
@@ -228,7 +228,7 @@ const AddPosts = () => {
               {" "}
               Primary Details{" "}
             </Heading>
-            <Divider />
+            <Divider /> */}
 
             <Button type="submit" onClick={postPost}>
               Submit

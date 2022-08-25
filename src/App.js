@@ -21,7 +21,7 @@ function App() {
       <Route path = '/login' element = {<Login/>}/>
       <Route path = 'posts/:postId' element = {<SinglePostPage/>}/>
       <Route path = '/posts/addpost' element = {<AddPosts/>}/>
-      <Route path = '/user/dashboard' element = {<Dashboard/>}/>
+      <Route path = '/dashboard' element = {<Dashboard/>}/>
     </Routes>
     </Box>
     <Footer/>

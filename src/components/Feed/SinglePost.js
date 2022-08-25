@@ -14,16 +14,22 @@ import {
   ListItem,
   AspectRatio,
   HStack,
+  SkeletonCircle,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { MdTravelExplore } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { getSinglePostData } from "../../store/slices/singlePostSlice";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const SinglePost = () => {
   const { singlePost, isLoading, error } = useSelector(
     (state) => state.singlePost
   );
+
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+
   const dispatch = useDispatch();
   const { postId } = useParams();
 
@@ -33,12 +39,19 @@ const SinglePost = () => {
   // console.log(`${postId}`);
   // console.log(singlePost);
 
+  const handleDelete = (e) => {
+    const resposne = axios.delete(`http://localhost:8000/posts/${postId}`);
+    return resposne;
+  };
   return (
     <SimpleGrid columns={{ base: 1, md: 1, lg: 1 }} p ={4} w='60vw' bgColor='whiteAlpha.600' borderRadius='lg'>
-      {isLoading && !error && <p>Data is loading</p>}
+      {isLoading && !error && <Box padding="6" w="40%" boxShadow="lg" bg="white">
+            <SkeletonCircle size="10" />
+            <SkeletonText mt="4" noOfLines={4} spacing="4" />
+          </Box>}
 
       <Stack spacing={{ base: 6, md: 10 }}>
-        <Box as={"header"}>
+        <VStack as={"header"} gap={4}>
           <Heading
             lineHeight={1.1}
             fontWeight={600}
@@ -46,7 +59,7 @@ const SinglePost = () => {
           >
             {singlePost.title}
           </Heading>
-          <HStack justifyContent='space-between'>
+          <HStack w='100%' justifyContent='space-between'>
           <Text
             color={useColorModeValue("gray.900", "gray.400")}
             fontWeight={300}
@@ -62,7 +75,17 @@ const SinglePost = () => {
             Estimated Cost : ${singlePost.cost}
           </Text>
           </HStack>
-        </Box>
+        {isLoggedIn && (
+                <HStack
+                  w="100%"
+                  justifyContent="space-between"
+                  // bgColor={"blackAlpha.700"}
+                >
+                  <Button colorScheme='blue'>Edit</Button>
+                  <Button colorScheme="red" onClick={handleDelete}>Delete</Button>
+                </HStack>
+              )}
+        </VStack>
         {!singlePost.image ?  
         <Image
         rounded={"md"}
