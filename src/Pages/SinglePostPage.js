@@ -123,7 +123,7 @@ const SinglePostPage = () => {
             orientation="horizontal"
           />
           <Link
-            to="#para_one"
+            to="/#para_one"
             p={3}
             _hover={{
               background: "grey.400",
@@ -141,7 +141,7 @@ const SinglePostPage = () => {
           </Link>
 
           <Link
-            to="#para_two"
+            to="/#para_two"
             p={3}
             _hover={{
               background: "grey.400",
@@ -159,7 +159,7 @@ const SinglePostPage = () => {
           </Link>
 
           <Link
-            href="#para_three"
+            to = "/#para-three"
             p={3}
             _hover={{
               background: "grey.400",

@@ -1,23 +1,19 @@
 import React from "react";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
-import {
-  HStack,
-  Image,
-  Link,
-  Box,
-} from "@chakra-ui/react";
+import { HStack, Image, Link, Box, Text } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store/slices/authSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const { user } = useSelector((state) => state.auth);
 
   const logOut = (e) => {
     e.preventDefault();
     dispatch(authActions.logOut());
-    navigate('/login')
+    navigate("/login");
   };
 
   return (
@@ -55,7 +51,7 @@ const Navbar = () => {
             to="/signup"
           >
             Sign Up
-          </Link> 
+          </Link>
           <Link
             color="teal.700"
             fontWeight="bold"
@@ -70,14 +66,12 @@ const Navbar = () => {
 
       {isLoggedIn && (
         <Box>
-          <Link
-            onClick={logOut}
-            color="teal.700"
-            fontWeight="bold"
-            mr={10}
-          >
-            Log out
-          </Link>
+          <HStack spacing={12}>
+            <Text as={'i'}>Hello, {user[0].firstName} </Text>
+            <Link onClick={logOut} color="teal.700" fontWeight="bold" mr={10}>
+              Log out
+            </Link>
+          </HStack>
         </Box>
       )}
     </HStack>

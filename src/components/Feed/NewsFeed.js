@@ -18,17 +18,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link as RouteLink } from "react-router-dom";
 // import { NameContext } from "../..";
 import { getPostsData } from "../../store/slices/postSlice";
-import { getLoginData } from "../../store/slices/authSlice";
-// import useFetch from "../../hooks/hooks";
 
 const NewsFeed = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const { posts, isLoading, error } = useSelector((state) => state.post);
+  const {user} = useSelector(state => state.auth)
+  const {posts, isLoading, error } = useSelector(state => state.post)
   // console.log(posts, error, isAuthenticated);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getPostsData());
+    console.log(posts.author)
+    try {
+      if(isLoggedIn){
+    console.log(user[0].firstName)
+  }
+    } catch (error) {
+      console.error(error)
+    }
   }, []);
 
 
@@ -77,8 +84,9 @@ const NewsFeed = () => {
                       background: "teal.200",
                     }}
                   >
-                    <HStack alignItems="start">
+                    <HStack alignItems="start" w='100%'>
                       <Box
+                        position="relative"
                         overflow="hidden"
                         h={200}
                         w="50%"
@@ -111,7 +119,7 @@ const NewsFeed = () => {
                           px="2"
                           colorScheme="teal"
                         >
-                          New
+                          New!
                         </Badge>
                       </Box>
                       <Box
@@ -164,7 +172,7 @@ const NewsFeed = () => {
                           </Box>
                         </Box>
                         <Box py={4}>
-                          <Text> Author: 'Author Name'</Text>
+                          <Text> Author: {post.author}</Text>
                         </Box>
                       </Box>
                     </HStack>

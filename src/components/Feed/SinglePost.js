@@ -18,7 +18,7 @@ import {
   SkeletonText,
 } from "@chakra-ui/react";
 import { MdTravelExplore } from "react-icons/md";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getSinglePostData } from "../../store/slices/singlePostSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -31,6 +31,7 @@ const SinglePost = () => {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { postId } = useParams();
 
   useEffect(() => {
@@ -39,10 +40,18 @@ const SinglePost = () => {
   // console.log(`${postId}`);
   // console.log(singlePost);
 
-  const handleDelete = (e) => {
-    const resposne = axios.delete(`http://localhost:8000/posts/${postId}`);
-    return resposne;
-  };
+const handleDelete = (e) => {
+  const resposne = axios.delete(`http://localhost:8000/posts/${postId}`);
+  navigate('/')
+  console.log(postId)
+  return resposne;
+};
+
+const handleEditRoute = (e) => {
+  navigate(`/editPost/${postId}`)
+
+};
+  
   return (
     <SimpleGrid columns={{ base: 1, md: 1, lg: 1 }} p ={4} w='60vw' bgColor='whiteAlpha.600' borderRadius='lg'>
       {isLoading && !error && <Box padding="6" w="40%" boxShadow="lg" bg="white">
@@ -81,7 +90,7 @@ const SinglePost = () => {
                   justifyContent="space-between"
                   // bgColor={"blackAlpha.700"}
                 >
-                  <Button colorScheme='blue'>Edit</Button>
+                  <Button colorScheme='blue' onClick={handleEditRoute}>Edit</Button>
                   <Button colorScheme="red" onClick={handleDelete}>Delete</Button>
                 </HStack>
               )}
@@ -124,13 +133,13 @@ const SinglePost = () => {
             >
               {singlePost.title}
             </Text>
-            <Text textAlign={"justify"} id="#para_one" fontSize={"lg"}>
+            <Text textAlign={"justify"} id={'para_one'} fontSize={"lg"}>
               {singlePost.firstParagraph}
             </Text>
-            <Text textAlign={"justify"} id="#para_one" fontSize={"lg"}>
+            <Text textAlign={"justify"} id={"para_two"} fontSize={"lg"}>
               {singlePost.secondParagraph}
             </Text>
-            <Text textAlign={"justify"} id="#para_one" fontSize={"lg"}>
+            <Text textAlign={"justify"} id={"para_three"} fontSize={"lg"}>
               {singlePost.thirdParagraph}
             </Text>
           </VStack>

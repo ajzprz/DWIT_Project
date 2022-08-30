@@ -40,12 +40,12 @@ const Signup = () => {
     (state) => state.signUp
   )
 
-  const registerUser = (e) =>{
+  const handleRegisterUser = (e) =>{
     e.preventDefault();
     dispatch(getSignUpData({firstName, lastName, email, password}))
     dispatch(authActions.login())
     console.log( users)
-    navigate('/dashboard')
+    navigate('/')
     // if(users){
 
     // }
@@ -79,6 +79,7 @@ const Signup = () => {
       align={'center'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}>
+        <form onSubmit={handleRegisterUser}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
@@ -131,7 +132,6 @@ const Signup = () => {
             <Stack spacing={10} pt={2}>
               <Button
               type='submit'
-              onClick={registerUser}
                 loadingText="Submitting"
                 size="lg"
                 bg={'blue.400'}
@@ -151,6 +151,7 @@ const Signup = () => {
           </Stack>
         </Box>
       </Stack>
+      </form>
     </Flex>
   );
 }
