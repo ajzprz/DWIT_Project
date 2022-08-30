@@ -29,13 +29,19 @@ const Login = () => {
     state => state.auth.isLoggedIn
   );
 
-  console.log(isLoggedIn, 'authenticated')
-
-  const loginUser = (e) => {
+  const {isAuthenticated, token,data} = useSelector((state) =>state.auth);
+  const handleUserLogin = (e) => {
     e.preventDefault();
-    // console.log( users);
+    dispatch(getLoginData({email,password}))
+    if(isAuthenticated){
     dispatch( authActions.login());
+    console.log(data)
     navigate("/")
+    // localStorage.setItem('jwt', token )
+  }
+  else{
+    setMessage('Sorry Incorrect Password')
+  }
   };
 
   return (
@@ -45,7 +51,8 @@ const Login = () => {
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}
     >
-      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+      <form onSubmit={handleUserLogin}>
+      <FormControl spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
@@ -88,7 +95,7 @@ const Login = () => {
               </Stack>
               <Text textAlign={"center"}>{message}</Text>
               <Button
-                onClick={loginUser}
+                type="submit"
                 bg={"blue.400"}
                 color={"white"}
                 _hover={{
@@ -100,7 +107,8 @@ const Login = () => {
             </Stack>
           </Stack>
         </Box>
-      </Stack>
+      </FormControl>
+      </form>
     </Flex>
   );
 };

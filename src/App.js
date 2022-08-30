@@ -8,8 +8,12 @@ import Signup from './Pages/Signup';
 import SinglePostPage from './Pages/SinglePostPage';
 import Footer from './components/Footer';
 import { Box } from '@chakra-ui/react';
+import EditPost from './components/Users/EditPost';
+import { useSelector } from 'react-redux';
 
 function App() {
+
+  const {isAuthenticated} = useSelector(state=> state.auth)
 
   return (
     <BrowserRouter>
@@ -22,6 +26,7 @@ function App() {
       <Route path = 'posts/:postId' element = {<SinglePostPage/>}/>
       <Route path = '/posts/addpost' element = {<AddPosts/>}/>
       <Route path = '/dashboard' element = {<Dashboard/>}/>
+      <Route path = '/editPost/:postId' element = {<EditPost/>}/>
     </Routes>
     </Box>
     <Footer/>

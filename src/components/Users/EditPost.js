@@ -18,22 +18,22 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
+const EditPost = () => {
+  const { user } = useSelector((state) => state.auth);
+  const { singlePost } = useSelector((state) => state.singlePost);
 
-const AddPosts = () => {
-  const {user} = useSelector((state)=>state.auth)
-
-  const [author,setAuthor] = useState(`${user[0].firstName}`)
-  const [title, setTitle] = useState("");
-  const [location, setLocation] = useState("");
-  const [image, setImage] = useState("");
-  const [heritages, setHeritages] = useState("");
-  const [firstParagraph, setFirstParagraph] = useState("");
-  const [secondParagraph, setSecondParagraph] = useState("");
-  const [thirdParagraph, setThirdParagraph] = useState("");
-  const [suggestion, setSuggestion] = useState("");
+  const [author, setAuthor] = useState(`${singlePost.Author}`);
+  const [title, setTitle] = useState(`${singlePost.title}`);
+  const [location, setLocation] = useState(`${singlePost.location}`);
+  const [image, setImage] = useState(`${singlePost.image}`);
+  const [heritages, setHeritages] = useState(`${singlePost.heritages}`);
+  const [firstParagraph, setFirstParagraph] = useState(`${singlePost.firstParagraph}`);
+  const [secondParagraph, setSecondParagraph] = useState(`${singlePost.secondParagraph}`);
+  const [thirdParagraph, setThirdParagraph] = useState(`${singlePost.thirdParagraph}`);
+  const [suggestion, setSuggestion] = useState(`${singlePost.suggestion}`);
   const [cost, setCost] = useState(0);
   const [rating, setRating] = useState(5);
   const [latitude, setLatitude] = useState("27.6936951");
@@ -42,11 +42,13 @@ const AddPosts = () => {
   const [showTooltip] = useState(false);
   const navigate = useNavigate();
 
+  const postId = useParams();
 
+  // console.log(singlePost)
 
   const handleNewPost = async (e) => {
     e.preventDefault();
-    let response = await axios.post("http://localhost:8000/posts/newPost", {
+    const response = axios.put(`http://localhost:8000/posts/${postId}`, {
       author,
       title,
       location,
@@ -58,9 +60,11 @@ const AddPosts = () => {
       image,
       cost,
       rating,
+      latitude,
+      longitude,
     });
     console.log(response);
-    navigate("/");
+    navigate(`/`);
     return response;
   };
 
@@ -89,7 +93,7 @@ const AddPosts = () => {
               <Input
                 type="text"
                 // placeholder={user.user[0].firstName}
-                value={author}
+                value={user[0].firstName}
                 onChange={(e) => setAuthor(e.target.value)}
               />
 
@@ -123,14 +127,13 @@ const AddPosts = () => {
               </HStack>
               <FormLabel>Images of Location</FormLabel>
               <Input
-              isRequired={false}
                 border="dotted"
                 p={1}
                 type="text"
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               />
-              <FormLabel>Heritages of the Location</FormLabel>
+              <FormLabel>Heritages of the Loaction</FormLabel>
               <Input
                 type="text"
                 value={heritages}
@@ -222,18 +225,6 @@ const AddPosts = () => {
                 value={suggestion}
                 onChange={(e) => setSuggestion(e.target.value)}
               />
-              {/* </VStack>
-          <VStack spacing={4}
-            alignItems="start"
-            bgColor="white"
-            p="20px"
-            borderRadius={"lg"}>
-            <Heading as="h5" size="sm" textTransform="uppercase">
-              {" "}
-              Primary Details{" "}
-            </Heading>
-            <Divider /> */}
-
               <Button type="submit">Submit</Button>
             </VStack>
           </FormControl>
@@ -243,4 +234,4 @@ const AddPosts = () => {
   );
 };
 
-export default AddPosts;
+export default EditPost;

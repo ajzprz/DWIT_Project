@@ -2,13 +2,22 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 
+const initialState = {
+  isLoggedIn :false,
+  isAuthenticated : false,
+  user: [],
+  data:null,
+  isLoading:null,
+  token:null,
+}
+
 const api = "http://localhost:8000";
 
 export const getLoginData = createAsyncThunk(
   "user/getLoginData",
   async ({ email, password }) => {
     try {
-      console.log(email, password);
+      // console.log(email, password);
       const response = await axios.post(api + `/user/login`, {
         email,
         password,
@@ -21,9 +30,9 @@ export const getLoginData = createAsyncThunk(
   }
 );
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
   name: "auth",
-  initialState : {isLoggedIn : false},
+  initialState,
   reducers: {
     login(state) {
       state.isLoggedIn = true;
@@ -32,6 +41,22 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
     },
   },
+  extraReducers:{
+    [getLoginData.pending]: (state) => {
+      state.isLoading = true
+    },
+    [getLoginData.fulfilled]: (state, action) => {
+      state.user = action.payload.user;
+      state.isLoading = false;
+      state.data = action.payload;
+      state.isAuthenticated = true;
+      state.token = action.payload.token;
+    },
+    [getLoginData.rejected]: (state) => {
+      state.isLoading = false
+      state.isAuthenticated = false;
+    },
+  }
 });
 
 export const authActions = authSlice.actions
